@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Your Name</title>
-<meta name="description" content="Links, projects and my little room.">
+<title>Faes Hub</title>
+<meta name="description" content="Links and projects from fae.">
 <meta name="theme-color" content="#1d2418">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path fill='%23c4f53c' d='M50 0l11 39 39 11-39 11-11 39-11-39L0 50l39-11z'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -130,6 +130,7 @@ dialog .nav{position:fixed;top:50%;width:3.2rem;height:3.2rem;border-radius:50%;
   background:linear-gradient(135deg,rgba(255,255,255,.25),rgba(255,255,255,.06));-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:inset 0 1px 1px rgba(255,255,255,.6)}
 dialog .pv{left:max(.75rem,3vw)}dialog .nx{right:max(.75rem,3vw)}
 
+[hidden]{display:none!important}
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}
   .js .go{opacity:1}}
@@ -141,7 +142,7 @@ dialog .pv{left:max(.75rem,3vw)}dialog .nx{right:max(.75rem,3vw)}
 <div class="wrap">
   <header class="hero">
     <div>
-      <h1 class="go" style="--i:1">Your<br>Name<span class="spark" aria-hidden="true"></span></h1>
+      <h1 class="go" style="--i:1">Faes<br>Hub<span class="spark" aria-hidden="true"></span></h1>
       <p class="lead go" style="--i:2">IT apprentice. Discord bots, networks and <em>bouldering</em>.</p>
       <div class="zone">
         <p class="group go" style="--i:3">Find me</p>
@@ -162,7 +163,7 @@ dialog .pv{left:max(.75rem,3vw)}dialog .nx{right:max(.75rem,3vw)}
     <div class="rail" id="rail"></div>
   </section>
 
-  <section class="sec" id="room-sec">
+  <section class="sec" id="room-sec" hidden>
     <h2>My room</h2>
     <p class="sub">Every glowing label is a link.</p>
     <div class="stage">
@@ -172,7 +173,7 @@ dialog .pv{left:max(.75rem,3vw)}dialog .nx{right:max(.75rem,3vw)}
   </section>
 
   <footer class="foot">
-    <span>© <span id="year"></span> Your Name</span>
+    <span>© <span id="year"></span> fae</span>
     <span>All artwork by @komiumee</span>
   </footer>
 </div>
@@ -253,6 +254,10 @@ const st=$('#stars');
 for(let i=0;i<18;i++){const s=document.createElement('i'),z=8+Math.random()*20;s.className='star';
   s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${z}px;height:${z}px;animation-delay:${-Math.random()*6}s;animation-duration:${3+Math.random()*4}s`;st.appendChild(s)}
 
+// Zimmer ein-/ausblenden: auf true setzen, dann erscheint der Bereich "My room" wieder
+const SHOW_ROOM=false;
+if(SHOW_ROOM){$('#room-sec').hidden=false;const rs=document.createElement('script');rs.src='room.js';document.body.appendChild(rs)}
+
 // Zimmer-Beschriftungen: Titel muss zu einem Eintrag oben passen.
 // tag = Position des Labels, obj = Kreis um das Objekt (x, y, Radius x, Radius y), alles in Zimmer-Pixeln (400x250)
 const SPOTS=[
@@ -269,6 +274,5 @@ tags.querySelectorAll('a').forEach(a=>{
   const on=()=>window.hot=a.dataset.t,off=()=>window.hot=null;
   a.addEventListener('mouseenter',on);a.addEventListener('focus',on);a.addEventListener('mouseleave',off);a.addEventListener('blur',off)});
 </script>
-<script src="room.js" defer></script>
 </body>
 </html>
