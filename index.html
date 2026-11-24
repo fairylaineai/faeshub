@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Your Name</title>
+<meta name="description" content="Links from Your Name.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍄</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,400..800,100,1&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#121f17; --moss:#223a28; --fern:#7da356; --lichen:#bccb9c;
+  --amber:#e8a93a; --mist:#e8eddc;
+  --serif:'Fraunces',Georgia,serif; --sans:'DM Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+html{background:var(--night);color:var(--mist);scroll-behavior:smooth}
+body{font-family:var(--sans);line-height:1.6;min-height:100vh;position:relative;overflow-x:hidden;
+  background:radial-gradient(ellipse at 50% -10%,#2c4a33 0%,var(--night) 60%);
+  padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
+#fireflies{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+main{position:relative;z-index:1;max-width:30rem;margin:0 auto;padding:4rem 1.25rem 12rem}
+.avatar{width:7.5rem;height:7.5rem;border-radius:50% 50% 46% 54%/55% 45% 55% 45%;margin:0 auto 1.5rem;
+  background:conic-gradient(from 200deg,var(--amber),var(--fern),var(--moss),var(--amber));
+  display:grid;place-items:center;font-size:3.4rem;box-shadow:0 0 3rem #e8a93a55;animation:sway 9s ease-in-out infinite}
+@keyframes sway{50%{border-radius:46% 54% 55% 45%/45% 55% 45% 55%;transform:rotate(3deg)}}
+h1{font-family:var(--serif);font-weight:700;font-size:clamp(2.4rem,9vw,3.4rem);line-height:1.05;text-align:center;
+  font-variation-settings:"SOFT" 100,"WONK" 1;letter-spacing:-.01em}
+.tag{text-align:center;color:var(--lichen);margin:.75rem auto 2.5rem;max-width:22rem}
+h2{font-family:var(--serif);font-weight:600;font-size:1.35rem;margin:3rem 0 1rem;font-variation-settings:"SOFT" 100;color:var(--amber)}
+.links{list-style:none;padding:0;display:grid;gap:.8rem}
+.links a{display:flex;align-items:center;gap:.9rem;padding:.95rem 1.2rem;text-decoration:none;color:var(--mist);
+  background:#ffffff0d;border:1.5px solid #bccb9c44;border-radius:1.6rem 1rem 1.6rem 1rem;
+  backdrop-filter:blur(6px);transition:transform .25s,background .25s,border-color .25s}
+.links a:hover{transform:translateX(.35rem) rotate(-.6deg);background:#e8a93a1f;border-color:var(--amber)}
+.links .ico{font-size:1.4rem;width:1.8rem;text-align:center}
+.links b{font-weight:500;display:block}
+.links small{color:var(--lichen);font-size:.85rem}
+a:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+footer{text-align:center;color:var(--lichen);font-size:.85rem;margin-top:3.5rem}
+.hills{position:fixed;left:0;right:0;bottom:0;z-index:0;pointer-events:none;height:11rem}
+.hills svg{width:100%;height:100%;display:block}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<canvas id="fireflies" aria-hidden="true"></canvas>
+
+<main>
+  <div class="avatar" aria-hidden="true">🍄</div>
+  <h1>Your Name</h1>
+  <p class="tag">IT apprentice. Discord bots, networks and bouldering.</p>
+
+  <h2>Links</h2>
+  <ul class="links" id="links"></ul>
+
+  <h2>Projects</h2>
+  <ul class="links" id="projects"></ul>
+
+  <footer>© <span id="year"></span> Your Name</footer>
+</main>
+
+<div class="hills" aria-hidden="true">
+  <svg viewBox="0 0 800 176" preserveAspectRatio="none">
+    <path d="M0 110 Q150 40 300 100 T600 90 T800 100 V176 H0Z" fill="#1a2e20"/>
+    <g fill="#14261a">
+      <path d="M60 120 l22-60 22 60z M90 120 l18-48 18 48z M520 118 l24-66 24 66z M560 118 l16-44 16 44z M700 122 l20-54 20 54z"/>
+    </g>
+    <path d="M0 140 Q200 90 400 135 T800 125 V176 H0Z" fill="#0f1d14"/>
+  </svg>
+</div>
+
+<script>
+// Edit here: icon, title, short line, address
+const LINKS = [
+  {icon:"🎮", title:"Discord", note:"Join the server", url:"https://discord.com"},
+  {icon:"💻", title:"GitHub", note:"Code and bots", url:"https://github.com"},
+  {icon:"🎧", title:"Spotify", note:"What's playing", url:"https://spotify.com"},
+  {icon:"📸", title:"Instagram", note:"Bouldering and forest", url:"https://instagram.com"},
+];
+const PROJECTS = [
+  {icon:"🐟", title:"fisch.ing", note:"Visit my site", url:"https://www.fisch.ing"},
+];
+
+const liste = (id, arr) => document.getElementById(id).innerHTML = arr.map(l =>
+  `<li><a href="${l.url}" target="_blank" rel="noopener"><span class="ico">${l.icon}</span><span><b>${l.title}</b><small>${l.note}</small></span></a></li>`).join('');
+liste('links', LINKS); liste('projects', PROJECTS);
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// Glühwürmchen
+(() => {
+  const c = document.getElementById('fireflies'), x = c.getContext('2d');
+  const still = matchMedia('(prefers-reduced-motion:reduce)').matches;
+  let w, h, flies = [];
+  const size = () => { w = c.width = innerWidth; h = c.height = innerHeight; };
+  size(); addEventListener('resize', size);
+  for (let i = 0; i < 38; i++) flies.push({x:Math.random()*innerWidth, y:Math.random()*innerHeight, r:1+Math.random()*2, a:Math.random()*6.28, s:.15+Math.random()*.35, p:Math.random()*6.28});
+  (function draw(t = 0) {
+    x.clearRect(0, 0, w, h);
+    for (const f of flies) {
+      if (!still) { f.a += (Math.random()-.5)*.15; f.x += Math.cos(f.a)*f.s; f.y += Math.sin(f.a)*f.s - .05; }
+      if (f.x<0) f.x=w; if (f.x>w) f.x=0; if (f.y<0) f.y=h; if (f.y>h) f.y=0;
+      const g = .35 + .65*Math.abs(Math.sin(t/1200 + f.p));
+      const grad = x.createRadialGradient(f.x, f.y, 0, f.x, f.y, f.r*7);
+      grad.addColorStop(0, `rgba(232,169,58,${g})`); grad.addColorStop(1, 'rgba(232,169,58,0)');
+      x.fillStyle = grad; x.beginPath(); x.arc(f.x, f.y, f.r*7, 0, 6.283); x.fill();
+    }
+    if (!still) requestAnimationFrame(draw);
+  })();
+})();
+</script>
+</body>
+</html>
