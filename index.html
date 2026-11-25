@@ -18,7 +18,7 @@
 }
 *{box-sizing:border-box;margin:0}
 html{background:var(--bog);color:var(--paper);scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{font-family:var(--display);font-size:1rem;line-height:1.5;min-height:100vh;overflow-x:hidden;padding-bottom:env(safe-area-inset-bottom,0)}
+body{font-family:var(--display);font-size:1rem;line-height:1.5;min-height:100vh;overflow-x:hidden;overflow-x:clip;padding-bottom:env(safe-area-inset-bottom,0)}
 a{color:inherit}
 a:focus-visible,button:focus-visible{outline:3px solid var(--acid);outline-offset:3px}
 
@@ -37,11 +37,12 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:60;opa
 .wrap{max-width:74rem;margin:0 auto;padding:0 1.25rem}
 
 /* hero */
-.hero{display:grid;gap:2rem;padding:max(1.25rem,env(safe-area-inset-top,0px)) 0 3rem}
-.art{order:-1}
+.hero{display:grid;gap:1.6rem;padding:max(1rem,env(safe-area-inset-top,0px)) 0 3rem}
 @media(min-width:900px){
-  .hero{grid-template-columns:1.05fr .95fr;gap:4.5rem;align-items:center;min-height:100vh;padding:3rem 0}
-  .art{order:0;position:sticky;top:2rem}}
+  .hero{grid-template-columns:1.05fr .95fr;grid-template-areas:"intro art" "zone art";grid-template-rows:auto auto;align-content:center;column-gap:4.5rem;row-gap:0;min-height:100vh;padding:3rem 0}
+  .intro{grid-area:intro;align-self:end}
+  .zone{grid-area:zone;align-self:start}
+  .art{grid-area:art;align-self:center;position:sticky;top:2rem}}
 h1{font-weight:800;font-variation-settings:"wdth" 75;font-size:clamp(4.4rem,16vw,10rem);line-height:.82;letter-spacing:-.035em}
 .spark{display:inline-block;width:.34em;height:.34em;margin-left:.08em;vertical-align:.5em;background:var(--acid);
   clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%);animation:spin 9s linear infinite}
@@ -51,8 +52,8 @@ h1{font-weight:800;font-variation-settings:"wdth" 75;font-size:clamp(4.4rem,16vw
 .group{font-family:var(--serif);font-style:italic;font-size:1.35rem;color:var(--lichen);margin:2rem 0 .8rem}
 .zone{position:relative;isolation:isolate}
 .zone::before,.zone::after{content:"";position:absolute;z-index:-1;border-radius:50%;filter:blur(18px)}
-.zone::before{width:15rem;height:15rem;left:-4rem;top:0;background:radial-gradient(circle,rgba(196,245,60,.6),transparent 65%);animation:drift 15s ease-in-out infinite alternate}
-.zone::after{width:13rem;height:13rem;right:-2rem;bottom:-2rem;background:radial-gradient(circle,rgba(243,183,156,.6),transparent 65%);animation:drift 19s ease-in-out infinite alternate-reverse}
+.zone::before{width:15rem;height:15rem;left:-1rem;top:0;background:radial-gradient(circle,rgba(196,245,60,.6),transparent 65%);animation:drift 15s ease-in-out infinite alternate}
+.zone::after{width:13rem;height:13rem;right:0;bottom:-2rem;background:radial-gradient(circle,rgba(243,183,156,.6),transparent 65%);animation:drift 19s ease-in-out infinite alternate-reverse}
 @keyframes drift{to{transform:translate(7rem,9rem) scale(1.25)}}
 .list{display:grid;gap:.8rem;max-width:27rem}
 
@@ -68,8 +69,8 @@ h1{font-weight:800;font-variation-settings:"wdth" 75;font-size:clamp(4.4rem,16vw
 .glass::after{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;
   background:linear-gradient(140deg,rgba(255,255,255,.8),rgba(255,255,255,.05) 38%,rgba(255,255,255,.05) 62%,rgba(196,245,60,.6));
   -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
-.glass:hover,.glass:focus-visible{transform:scale(1.035) translateY(-2px);box-shadow:inset 0 1px 1px rgba(255,255,255,.7),inset 0 0 28px rgba(255,255,255,.1),0 18px 44px rgba(0,0,0,.45),0 0 34px rgba(196,245,60,.22)}
-.glass:hover::before{opacity:1}
+@media(hover:hover){.glass:hover{transform:scale(1.035) translateY(-2px);box-shadow:inset 0 1px 1px rgba(255,255,255,.7),inset 0 0 28px rgba(255,255,255,.1),0 18px 44px rgba(0,0,0,.45),0 0 34px rgba(196,245,60,.22)}.glass:hover::before{opacity:1}}
+.glass:focus-visible{transform:scale(1.035) translateY(-2px);box-shadow:inset 0 1px 1px rgba(255,255,255,.7),inset 0 0 28px rgba(255,255,255,.1),0 18px 44px rgba(0,0,0,.45),0 0 34px rgba(196,245,60,.22)}
 .glass:active{transform:scale(.97)}
 .chip{display:grid;place-items:center;flex:none;width:2.9rem;height:2.9rem;border-radius:50%;font-size:1.35rem;
   background:linear-gradient(145deg,rgba(255,255,255,.3),rgba(255,255,255,.05));
@@ -99,7 +100,7 @@ h1{font-weight:800;font-variation-settings:"wdth" 75;font-size:clamp(4.4rem,16vw
 .sec{padding:4.5rem 0 2rem}
 .sec h2{font-weight:800;font-variation-settings:"wdth" 75;font-size:clamp(2.6rem,8vw,4.6rem);line-height:.9;letter-spacing:-.03em}
 .sec p.sub{font-family:var(--serif);font-style:italic;font-size:1.25rem;color:var(--lichen);margin:.6rem 0 0}
-.rail{display:flex;gap:1.6rem;overflow-x:auto;scroll-snap-type:x proximity;padding:2.5rem 1.25rem 3rem;margin:0 -1.25rem;scrollbar-width:thin;scrollbar-color:var(--lichen) transparent}
+.rail{display:flex;gap:1.6rem;overflow-x:auto;scroll-snap-type:x proximity;padding:2.5rem 1.25rem 3rem;margin:0 -1.25rem;scrollbar-width:thin;scrollbar-color:var(--lichen) transparent;overscroll-behavior-x:contain;scroll-padding-inline:1.25rem;-webkit-overflow-scrolling:touch}
 .rail button{flex:0 0 min(68vw,16.5rem);border:0;padding:.4rem;background:var(--paper);border-radius:.3rem;cursor:pointer;scroll-snap-align:center;
   box-shadow:0 18px 36px rgba(0,0,0,.5);transform:rotate(var(--r,-1.5deg)) translateY(var(--y,0))}
 .rail button:nth-child(2n){--r:1.3deg;--y:-.6rem}
@@ -130,6 +131,27 @@ dialog .nav{position:fixed;top:50%;width:3.2rem;height:3.2rem;border-radius:50%;
   background:linear-gradient(135deg,rgba(255,255,255,.25),rgba(255,255,255,.06));-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:inset 0 1px 1px rgba(255,255,255,.6)}
 dialog .pv{left:max(.75rem,3vw)}dialog .nx{right:max(.75rem,3vw)}
 
+a,button{-webkit-tap-highlight-color:transparent}
+button,.glass{touch-action:manipulation}
+html:has(dialog[open]){overflow:hidden}
+dialog img{max-height:82vh;max-height:82dvh}
+@media(max-width:899px){
+  h1{font-size:clamp(3.8rem,20vw,6rem)}
+  .lead{margin:1rem 0 0;font-size:1.55rem}
+  .frame{aspect-ratio:4/4.6;max-height:52vh;max-height:52dvh}
+  .list{max-width:none}
+  .group{margin-top:1.4rem}
+  .sec{padding-top:3rem}
+}
+@media(max-width:899px),(hover:none){
+  body::after{display:none}
+  .bgart{inset:0;transform:scale(1.25);filter:blur(28px) saturate(1.4)}
+  .bgart.on{opacity:.45}
+  .zone::before,.zone::after{animation:none}
+  .glass{-webkit-backdrop-filter:blur(14px) saturate(1.6);backdrop-filter:blur(14px) saturate(1.6)}
+  dialog .nav{display:none}
+}
+.foot a{text-decoration:none;border-bottom:1px solid currentColor}
 [hidden]{display:none!important}
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}
@@ -141,20 +163,20 @@ dialog .pv{left:max(.75rem,3vw)}dialog .nx{right:max(.75rem,3vw)}
 
 <div class="wrap">
   <header class="hero">
-    <div>
+    <div class="intro">
       <h1 class="go" style="--i:1">Faes<br>Hub<span class="spark" aria-hidden="true"></span></h1>
       <p class="lead go" style="--i:2">IT apprentice. Discord bots, networks and <em>bouldering</em>.</p>
+    </div>
+    <figure class="art go" style="--i:2" id="art">
+      <div class="frame" id="frame" role="group" aria-label="Artwork slideshow, click for the next one"></div>
+      <figcaption><span>Art by @komiumee</span><span class="dots" id="dots"></span></figcaption>
+    </figure>
       <div class="zone">
         <p class="group go" style="--i:3">Find me</p>
         <nav class="list go" style="--i:4" id="links" aria-label="Links"></nav>
         <p class="group go" style="--i:5">Projects</p>
         <nav class="list go" style="--i:6" id="projects" aria-label="Projects"></nav>
       </div>
-    </div>
-    <figure class="art go" style="--i:2" id="art">
-      <div class="frame" id="frame" role="group" aria-label="Artwork slideshow, click for the next one"></div>
-      <figcaption><span>Art by @komiumee</span><span class="dots" id="dots"></span></figcaption>
-    </figure>
   </header>
 
   <section class="sec" id="gallery">
@@ -175,6 +197,7 @@ dialog .pv{left:max(.75rem,3vw)}dialog .nx{right:max(.75rem,3vw)}
   <footer class="foot">
     <span>© <span id="year"></span> fae</span>
     <span>All artwork by @komiumee</span>
+    <a href="/__logout">Log out</a>
   </footer>
 </div>
 
@@ -220,7 +243,7 @@ const HERO=ART.slice(0,4),frame=$('#frame'),dots=$('#dots'),bgs=[...document.que
 frame.innerHTML=HERO.map((x,i)=>`<img src="${x.s}" alt="${x.a}" ${i?'loading="lazy"':''} decoding="async">`).join('');
 dots.innerHTML=HERO.map((_,i)=>`<button aria-label="Show artwork ${i+1}"></button>`).join('');
 const imgs=[...frame.children],db=[...dots.children];
-let cur=0,bgi=0,timer;
+let cur=0,bgi=0,timer,sx=0,swf=0;
 function show(i){
   cur=(i+HERO.length)%HERO.length;
   imgs.forEach((m,k)=>m.classList.toggle('on',k===cur));
@@ -228,8 +251,11 @@ function show(i){
   const nb=bgs[bgi^1];nb.style.backgroundImage=`url(${HERO[cur].s})`;nb.classList.add('on');bgs[bgi].classList.remove('on');bgi^=1}
 function play(){clearInterval(timer);if(!matchMedia('(prefers-reduced-motion:reduce)').matches)timer=setInterval(()=>show(cur+1),6500)}
 db.forEach((d,k)=>d.onclick=()=>{show(k);play()});
-frame.onclick=()=>{show(cur+1);play()};
+frame.onclick=()=>{if(Date.now()-swf<400)return;show(cur+1);play()};
 show(0);play();
+frame.addEventListener('touchstart',e=>{sx=e.changedTouches[0].clientX},{passive:true});
+frame.addEventListener('touchend',e=>{const d=e.changedTouches[0].clientX-sx;if(Math.abs(d)>45){swf=Date.now();show(cur+(d<0?1:-1));play()}},{passive:true});
+document.addEventListener('visibilitychange',()=>{document.hidden?clearInterval(timer):play()});
 
 if(matchMedia('(hover:hover)').matches&&!matchMedia('(prefers-reduced-motion:reduce)').matches){
   const art=$('#art');
@@ -246,12 +272,16 @@ $('#rail').innerHTML=ART.map((x,i)=>`<button data-i="${i}" aria-label="Open artw
 const lb=$('#lb'),lbi=lb.querySelector('img');let li=0;
 const open=i=>{li=(i+ART.length)%ART.length;lbi.src=ART[li].s;lbi.alt=ART[li].a;if(!lb.open)lb.showModal()};
 $('#rail').addEventListener('click',e=>{const b=e.target.closest('button');if(b)open(+b.dataset.i)});
-lb.addEventListener('click',e=>{if(e.target.closest('.nx'))open(li+1);else if(e.target.closest('.pv'))open(li-1);else lb.close()});
+let lx=0,lsw=0;
+lb.addEventListener('touchstart',e=>{lx=e.changedTouches[0].clientX},{passive:true});
+lb.addEventListener('touchend',e=>{const d=e.changedTouches[0].clientX-lx;if(Math.abs(d)>45){lsw=Date.now();open(li+(d<0?1:-1))}},{passive:true});
+lb.addEventListener('click',e=>{if(Date.now()-lsw<400)return;if(e.target.closest('.nx'))open(li+1);else if(e.target.closest('.pv'))open(li-1);else lb.close()});
 addEventListener('keydown',e=>{if(!lb.open)return;if(e.key==='ArrowRight')open(li+1);if(e.key==='ArrowLeft')open(li-1)});
 
 // Funkeln im Hintergrund
 const st=$('#stars');
-for(let i=0;i<18;i++){const s=document.createElement('i'),z=8+Math.random()*20;s.className='star';
+const NS=innerWidth<700?8:18;
+for(let i=0;i<NS;i++){const s=document.createElement('i'),z=8+Math.random()*20;s.className='star';
   s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${z}px;height:${z}px;animation-delay:${-Math.random()*6}s;animation-duration:${3+Math.random()*4}s`;st.appendChild(s)}
 
 // Zimmer ein-/ausblenden: auf true setzen, dann erscheint der Bereich "My room" wieder
