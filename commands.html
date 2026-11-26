@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FairyCodez commands · Faes Hub</title>
+<meta name="description" content="Every command of the FairyCodez Discord bot.">
+<meta name="theme-color" content="#1d2418">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path fill='%23c4f53c' d='M50 0l11 39 39 11-39 11-11 39-11-39L0 50l39-11z'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="bgart on" style="background-image:url(images/bg/art-headphones.webp)"></div><div class="wash"></div><div class="stars" id="stars" aria-hidden="true"></div>
+
+<div class="wrap">
+  <header class="cmd-hero cmd-grid">
+    <div>
+      <a class="back go" style="--i:0" href="/">Back to Faes Hub</a>
+      <h1 class="go" style="--i:1">Fairy<br>Codez<span class="spark" aria-hidden="true"></span></h1>
+      <p class="lead go" style="--i:2">Games and a tiny RPG for your Discord server.</p>
+      <p class="status go" style="--i:3" id="status" hidden></p>
+      <div class="list go" style="--i:4" id="cta"></div>
+    </div>
+    <figure class="polaroid go" style="--i:3">
+      <img src="images/thumbs/art-headphones.webp" width="520" height="735" alt="Two people in a dark green frame, one in headphones and a Radiohead shirt, one in a corset top">
+      <figcaption>Art by @komiumee</figcaption>
+    </figure>
+  </header>
+
+  <section class="sec">
+    <h2>Commands</h2>
+    <p class="sub">Type a slash in any chat where the bot lives and pick one. They work in servers and in DMs.</p>
+    <div class="cmds" id="cmds"></div>
+  </section>
+
+  <section class="sec">
+    <h2>Tiny RPG</h2>
+    <p class="rpg-text">Every now and then an enemy shows up in the chat. Pick what you do about it with the buttons.</p>
+    <div class="pills" aria-label="RPG buttons"><span class="pill">Fight</span><span class="pill">Attack</span><span class="pill">Flee</span></div>
+  </section>
+
+  <footer class="foot">
+    <span>© <span id="year"></span> fae</span>
+    <span>All artwork by @komiumee</span>
+    <a href="/__logout">Log out</a>
+  </footer>
+</div>
+
+<script src="config.js"></script>
+<script src="common.js"></script>
+<script>
+document.documentElement.classList.add('js');
+
+// Hier eintragen: Befehl (ohne Schrägstrich), kurze Beschreibung. soon:true = "kommt bald"
+const COMMANDS = [
+  {c:"tictactoe", d:"Classic tic-tac-toe."},
+  {c:"blackjack", d:"A round of blackjack."},
+  {c:"rps",       d:"Rock, paper, scissors."},
+  {c:"coinflip",  d:"Heads or tails."},
+  {c:"simonsays", d:"Simon says."},
+  {c:"rng",       d:"A random number."},
+  {c:"diceset",   d:"Roll a set of dice."},
+  {c:"hangman",   d:"Coming soon.", soon:true},
+];
+
+$('#cmds').innerHTML=COMMANDS.map(x=>`<div class="cmd${x.soon?' soon':''}"><b><i>/</i>${x.c}</b><span>${x.d}</span></div>`).join('');
+$('#cta').innerHTML=btn({icon:"➕",title:"Add to your server",note:"Takes a few seconds",url:BOT_INVITE,cls:"cta"});
+$('#year').textContent=new Date().getFullYear();
+
+botStatus().then(d=>{if(!d)return;const el=$('#status');el.hidden=false;
+  el.innerHTML=d.online
+    ?`<span class="dot on"></span>Online right now${d.servers?`, on ${d.servers} server${d.servers>1?'s':''}`:''}.`
+    :`<span class="dot"></span>Asleep right now. It will be back soon.`});
+</script>
+</body>
+</html>

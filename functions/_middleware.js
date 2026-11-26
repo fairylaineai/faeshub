@@ -66,6 +66,9 @@ ${message ? `<p class="err" role="alert">${message}</p>` : ''}
 export async function onRequest({ request, next, env }) {
   if (String(env.SITE_PUBLIC || '') === '1') return next();
 
+  // Der Bot meldet sich hier ohne Seiten-Passwort; der Endpunkt prüft selbst einen geheimen Schlüssel.
+  if (request.method === 'POST' && new URL(request.url).pathname === '/api/heartbeat') return next();
+
   const users = [['fae', env.PASSWORD_FAE], ['komiumee', env.PASSWORD_KOMI]].filter(([, p]) => p && String(p).length);
   if (!users.length) return loginPage('Setup missing: no passwords are set yet.', 503);
 
